@@ -2,25 +2,28 @@ import turtle
 import Calculate as triangle_solve
 import Save_file
 
-# TODO: Ограничение количество строк
-# TODO: Сделать ручной ввод, возможно бегунками
-
-type, n, ro, teta, b_side = 'whirpool', 5, 20.0, 40.0, 150.0
+n = int(input("Enter the number of corners: ") or 4)
 
 beta_ = 360/n
 alpha_ = (180-beta_)/2
 
-# проверка входных параметров
-if ro < 0 or ro > beta_/2:
-    print('ro must be in range between 0 and', beta_/2)
-if teta <= 0 or ro > alpha_:
-    print('teta must be in range between 0 and', alpha_)
+ro, sigma = -1, -1
+
+while ro < 0 or ro > beta_/2:
+    ro = float(input("Enter the angle of rotation (0 < ro <= " +
+                 str(beta_/2) + "): ") or 10)
+while sigma < 0 or sigma > alpha_:
+    sigma = float(input("Enter the angle of spirality (0 < sigma <= " +
+                   str(alpha_) + "): ") or 10)
+
+type, b_side = 'whirpool', 100
 
 # Выставление указателя на край экрана
 screen = turtle.Screen()
 
 turtle.penup()
-turtle.goto(10 - screen.window_width() / 2, 10 - screen.window_height() / 2)
+turtle.goto(100 - screen.window_width() / 2,
+            10 - screen.window_height() / 2)
 turtle.pendown()
 
 turtle.hideturtle()
@@ -28,7 +31,7 @@ turtle.speed(0)
 
 
 # Расчет углов
-alpha = teta
+alpha = sigma
 epsilon = ro / 2
 beta = epsilon + 180 / n
 gamma = 180 - (alpha + beta)
@@ -36,25 +39,33 @@ gamma = 180 - (alpha + beta)
 count = 1
 row = []
 
+a_side, c_side = triangle_solve.solve_triangle(alpha, beta, gamma, b_side)
+
+print('Треугольник', count,
+      [alpha, beta, gamma, a_side, b_side, c_side])
+
+# считаем угол противоположного треугольника
+
+angle = triangle_solve.get_angle(a_side, c_side, 180 - gamma - alpha - ro)
+
 for i in range(n):  # Добавить 1, если делаем lampshade
     # row.append(turtle.clone())
     turtle.forward(b_side)
     row.append(turtle.clone())
     turtle.left(ro)
 
-# Создать копию массива row, чтобы отрисовать нижние треугольники, если делаем lampshade
+# Создать копию массива row,
+# чтобы отрисовать нижние треугольники, если делаем lampshade
 
-while count < 10:
+while count <= 15:
     # Посчитали треугольник
-    if ro != 0 or count == 1:
-        a_side, c_side = triangle_solve.solve_triangle(alpha, beta, gamma, b_side)
+    if ro != 0 and count > 1:
+        a_side, c_side = triangle_solve.solve_triangle(
+            alpha, beta,
+            gamma, b_side)
 
-        print('Треугольник', count, [alpha, beta, gamma, a_side, b_side, c_side])
-
-        # считаем угол противоположного треугольника
-        # TODO: считать угол один раз и вообще сделать отдельный класс Triangle
-        angle = triangle_solve.get_angle(a_side, c_side, 180 - gamma - alpha - ro)
-        # print(angle)
+        print('Треугольник', count,
+              [alpha, beta, gamma, a_side, b_side, c_side])
 
     for dot in row:
         # чертим треугольник
@@ -88,8 +99,11 @@ while count < 10:
 '''
 if ro > 0:
     fin_angle = (180 - ro) / 2
-    a_side, c_side = triangle_solve.solve_triangle(fin_angle, ro, fin_angle, b_side)
-    print('Треугольник 0', [alpha, beta, gamma, a_side, b_side, c_side])
+    a_side, c_side = triangle_solve.solve_triangle(
+        fin_angle, ro, 
+        fin_angle, b_side)
+    print('Треугольник 0', 
+         [alpha, beta, gamma, a_side, b_side, c_side])
     for dot in row:
         dot.left(180 - fin_angle)
         dot.forward(a_side)
@@ -97,7 +111,8 @@ if ro > 0:
         dot.forward(c_side)
 '''
 
-Save_file.SaveEps()
+Save_file.SaveEps('Pattern')
+
 
 print('Fin!')
 

@@ -4,10 +4,10 @@ from turtle import *
 #import cairosvg
 #import canvasvg
 
-def SaveEps():
+def SaveEps(file_name):
     print('Saving in eps...')
     ts = getscreen()
-    ts.getcanvas().postscript(file="Pattern.eps")
+    ts.getcanvas().postscript(file=file_name+'.eps')
 
 # TODO: Настроить сохранение в формате PNG
 '''

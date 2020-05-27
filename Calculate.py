@@ -2,7 +2,8 @@ import math
 
 
 def solve_triangle(alpha=20.0, beta=20.0, gamma=20.0, b_side=50.0):
-    a_side = b_side * math.sin(math.radians(alpha)) / math.sin(math.radians(beta))
+    a_side = b_side * math.sin(math.radians(alpha)) / \
+             math.sin(math.radians(beta))
     c_side = b_side * math.sin(math.radians(gamma)) / math.sin(math.radians(beta))
 
     return [a_side, c_side]
