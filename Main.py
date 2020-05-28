@@ -1,5 +1,5 @@
 import turtle
-import Calculate as triangle_solve
+import Calculate
 import Save_file
 
 n = int(input("Enter the number of corners: ") or 4)
@@ -39,14 +39,14 @@ gamma = 180 - (alpha + beta)
 count = 1
 row = []
 
-a_side, c_side = triangle_solve.solve_triangle(alpha, beta, gamma, b_side)
+a_side, c_side = Calculate.solve_triangle(alpha, beta, gamma, b_side)
 
 print('Треугольник', count,
       [alpha, beta, gamma, a_side, b_side, c_side])
 
 # считаем угол противоположного треугольника
 
-angle = triangle_solve.get_angle(a_side, c_side, 180 - gamma - alpha - ro)
+angle = Calculate.get_angle(a_side, c_side, 180 - gamma - alpha - ro)
 
 for i in range(n):  # Добавить 1, если делаем lampshade
     # row.append(turtle.clone())
@@ -60,7 +60,7 @@ for i in range(n):  # Добавить 1, если делаем lampshade
 while count <= 15:
     # Посчитали треугольник
     if ro != 0 and count > 1:
-        a_side, c_side = triangle_solve.solve_triangle(
+        a_side, c_side = Calculate.solve_triangle(
             alpha, beta,
             gamma, b_side)
 
@@ -88,7 +88,7 @@ while count <= 15:
         dot.right(180 - angle)
 
     # посчитали базу второго треугольника
-    b_side = triangle_solve.get_side(pos_a, pos_b)
+    b_side = Calculate.get_side(pos_a, pos_b)
     # print (b_side)
 
     for dot in row:
@@ -99,7 +99,7 @@ while count <= 15:
 '''
 if ro > 0:
     fin_angle = (180 - ro) / 2
-    a_side, c_side = triangle_solve.solve_triangle(
+    a_side, c_side = Calculate.solve_triangle(
         fin_angle, ro, 
         fin_angle, b_side)
     print('Треугольник 0', 
