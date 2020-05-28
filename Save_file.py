@@ -1,13 +1,12 @@
-from tkinter import *
-from turtle import *
+import turtle
 
 #import cairosvg
 #import canvasvg
 
 def SaveEps(file_name):
     print('Saving in eps...')
-    ts = getscreen()
-    ts.getcanvas().postscript(file=file_name+'.eps')
+    screen = turtle.getscreen()
+    screen.getcanvas().postscript(file=file_name+'.eps')
 
 # TODO: Настроить сохранение в формате PNG
 '''

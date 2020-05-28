@@ -10,7 +10,7 @@ alpha_ = (180-beta_)/2
 ro, sigma = -1, -1
 
 while ro < 0 or ro > beta_/2:
-    ro = float(input("Enter the angle of rotation (0 < ro <= " +
+    ro = float(input("Enter the angle of rotation (0 =< ro <= " +
                  str(beta_/2) + "): ") or 10)
 while sigma < 0 or sigma > alpha_:
     sigma = float(input("Enter the angle of spirality (0 < sigma <= " +
